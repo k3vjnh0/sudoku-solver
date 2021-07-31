@@ -1,5 +1,3 @@
-
-
 def solve(bo):
     find = find_empty(bo)
     if not find:
@@ -34,8 +32,8 @@ def valid(bo, num, pos):
     box_x = pos[1] // 3
     box_y = pos[0] // 3
 
-    for i in range(box_y*3, box_y*3 + 3):
-        for j in range(box_x*3, box_x*3 + 3):
+    for i in range(box_y * 3, box_y * 3 + 3):
+        for j in range(box_x * 3, box_x * 3 + 3):
             if bo[i][j] == num and (i, j) != pos:
                 return False
 
@@ -45,16 +43,16 @@ def valid(bo, num, pos):
 def print_board(bo):
     for i in range(len(bo)):
         if i % 3 == 0 and i != 0:
-            print('- - - - - - - - - - -')
+            print("- - - - - - - - - - -")
 
         for j in range(len(bo[0])):
             if j % 3 == 0 and j != 0:
-                print('| ', end='')
+                print("| ", end="")
 
             if j == 8:
                 print(bo[i][j])
             else:
-                print(str(bo[i][j]) + ' ', end='')
+                print(str(bo[i][j]) + " ", end="")
 
 
 def find_empty(bo):
@@ -76,14 +74,12 @@ def main():
         [0, 8, 0, 7, 0, 4, 0, 6, 1],
         [3, 0, 9, 0, 0, 8, 0, 4, 0],
         [2, 4, 8, 5, 7, 0, 1, 0, 0],
-        [1, 0, 0, 0, 0, 6, 0, 0, 0]
+        [1, 0, 0, 0, 0, 6, 0, 0, 0],
     ]
 
-    print_board(board)
     solve(board)
-    print('=====================')
     print_board(board)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
