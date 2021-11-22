@@ -2,6 +2,7 @@
 import pygame
 from solver import solve, valid
 import time
+
 pygame.font.init()
 
 
@@ -15,20 +16,25 @@ class Grid:
         [9, 0, 4, 0, 6, 0, 0, 0, 5],
         [0, 7, 0, 3, 0, 0, 0, 1, 2],
         [1, 2, 0, 0, 0, 7, 4, 0, 0],
-        [0, 4, 9, 2, 0, 6, 0, 0, 7]
+        [0, 4, 9, 2, 0, 6, 0, 0, 7],
     ]
 
     def __init__(self, rows, cols, width, height):
         self.rows = rows
         self.cols = cols
-        self.cubes = [[Cube(self.board[i][j], i, j, width, height) for j in range(cols)] for i in range(rows)]
+        self.cubes = [
+            [Cube(self.board[i][j], i, j, width, height) for j in range(cols)]
+            for i in range(rows)
+        ]
         self.width = width
         self.height = height
         self.model = None
         self.selected = None
 
     def update_model(self):
-        self.model = [[self.cubes[i][j].value for j in range(self.cols)] for i in range(self.rows)]
+        self.model = [
+            [self.cubes[i][j].value for j in range(self.cols)] for i in range(self.rows)
+        ]
 
     def place(self, val):
         row, col = self.selected
@@ -51,13 +57,15 @@ class Grid:
     def draw(self, win):
         # Draw Grid Lines
         gap = self.width / 9
-        for i in range(self.rows+1):
+        for i in range(self.rows + 1):
             if i % 3 == 0 and i != 0:
                 thick = 4
             else:
                 thick = 1
-            pygame.draw.line(win, (0, 0, 0), (0, i*gap), (self.width, i*gap), thick)
-            pygame.draw.line(win, (0, 0, 0), (i*gap, 0), (i*gap, self.height), thick)
+            pygame.draw.line(win, (0, 0, 0), (0, i * gap), (self.width, i * gap), thick)
+            pygame.draw.line(
+                win, (0, 0, 0), (i * gap, 0), (i * gap, self.height), thick
+            )
 
         # Draw Cubes
         for i in range(self.rows):
@@ -121,10 +129,16 @@ class Cube:
 
         if self.temp != 0 and self.value == 0:
             text = fnt.render(str(self.temp), 1, (128, 128, 128))
-            win.blit(text, (x+5, y+5))
-        elif not(self.value == 0):
+            win.blit(text, (x + 5, y + 5))
+        elif not (self.value == 0):
             text = fnt.render(str(self.value), 1, (0, 0, 0))
-            win.blit(text, (x + (gap/2 - text.get_width()/2), y + (gap/2 - text.get_height()/2)))
+            win.blit(
+                text,
+                (
+                    x + (gap / 2 - text.get_width() / 2),
+                    y + (gap / 2 - text.get_height() / 2),
+                ),
+            )
 
         if self.selected:
             pygame.draw.rect(win, (255, 0, 0), (x, y, gap, gap), 3)
@@ -151,8 +165,8 @@ def redraw_window(win, board, time, strikes):
 
 def format_time(secs):
     sec = secs % 60
-    minute = secs//60
-    hour = minute//60
+    minute = secs // 60
+    hour = minute // 60
 
     mat = " " + str(minute) + ":" + str(sec)
     return mat
